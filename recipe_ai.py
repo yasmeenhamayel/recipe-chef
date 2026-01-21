@@ -36,7 +36,7 @@ if user_input := st.chat_input("اكتب المكونات مثل: دجاج، ب�
     
     if st.session_state.step == 1:
         st.session_state.liked = translate_input(user_input)
-        reply = "تمام، هل هناك أي مكونات لا تفضلها أو لديك حساسية منها؟ (إذا لم يوجد اكتب 'لا')"
+        reply = "تمام، هل هناك أي مكونات لا تفضلها أو لديك حساسية منها؟ (إذا لا يوجد اكتب 'لا')"
         st.session_state.messages.append({"role": "assistant", "content": reply})
         st.session_state.step = 2
         st.rerun()
@@ -80,3 +80,4 @@ if user_input := st.chat_input("اكتب المكونات مثل: دجاج، ب�
         st.session_state.step = 1 
 
         st.rerun()
+
