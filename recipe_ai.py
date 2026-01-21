@@ -22,16 +22,16 @@ def translate_input(text):
 if "step" not in st.session_state:
     st.session_state.step = 1
     st.session_state.liked = ""
-    st.session_state.messages = [{"role": "assistant", "content": "أهلاً بك! أنا شيف ياسمين الذكي، شو حابب نطبخ اليوم؟"}]
+    st.session_state.messages = [{"role": "assistant", "content": "أهلاً بك! شو حابب نطبخ اليوم؟"}]
 
-st.title("🍳 شيف ياسمين الذكي")
+st.title("🍳 ChifBot")
 
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
 # التعديل هنا في النص التوضيحي (Placeholder)
-if user_input := st.chat_input("اكتب المكونات مثل: دجاج، بطاطا، بصل..."):
+if user_input := st.chat_input("اكتب المكونات مثل: دجاج، بطاطا..."):
     st.session_state.messages.append({"role": "user", "content": user_input})
     
     if st.session_state.step == 1:
@@ -80,4 +80,5 @@ if user_input := st.chat_input("اكتب المكونات مثل: دجاج، ب�
         st.session_state.step = 1 
 
         st.rerun()
+
 
