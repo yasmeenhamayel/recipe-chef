@@ -15,6 +15,7 @@ df = get_data()
 
 def translate_input(text):
     try:
+        # المترجم التلقائي يضمن فهم المدخلات سواء كانت بالعربي أو الإنجليزي
         return GoogleTranslator(source='auto', target='en').translate(text).lower()
     except:
         return text.lower()
@@ -22,14 +23,13 @@ def translate_input(text):
 if "step" not in st.session_state:
     st.session_state.step = 1
     st.session_state.liked = ""
-    st.session_state.messages = [{"role": "assistant", "content": "Hello! I'm SmartChef. What would you like to cook today?"}]
+    st.session_state.messages = [{"role": "assistant", "content": "Hello! I'm ChefBot. What would you like to cook today?"}]
 
 st.title("🍳 ChefBot")
 
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
-
 
 if user_input := st.chat_input("Enter ingredients (e.g., chicken, potato, onion...)."):
     st.session_state.messages.append({"role": "user", "content": user_input})
@@ -47,6 +47,7 @@ if user_input := st.chat_input("Enter ingredients (e.g., chicken, potato, onion.
         
         temp_df = df.copy()
         
+        # استبعاد المكونات المرفوضة سواء كتب المستخدم "no" أو "لا"
         if "no" not in disliked_translated and "لا" not in user_input:
             disliked_words = disliked_translated.replace("and", " ").split()
             for word in disliked_words:
@@ -63,7 +64,7 @@ if user_input := st.chat_input("Enter ingredients (e.g., chicken, potato, onion.
             response = "Here are the top 3 recipes for you: \n\n"
             for i, (idx, recipe) in enumerate(results.iterrows()):
                 response += f"### {i+1}. {recipe['Title']} 🍴\n"
-                response += "** (Ingredients):**\n"
+                response += "**Ingredients:**\n"
                 for ing in recipe['Cleaned_Ingredients']:
                     response += f"* {ing}\n"
                 response += "\n---\n"
@@ -75,12 +76,3 @@ if user_input := st.chat_input("Enter ingredients (e.g., chicken, potato, onion.
         st.session_state.messages.append({"role": "assistant", "content": response})
         st.session_state.step = 1
         st.rerun()
-
-        st.session_state.messages.append({"role": "assistant", "content": response})
-        st.session_state.step = 1 
-
-        st.rerun()
-
-
-
-
