@@ -24,7 +24,7 @@ if "step" not in st.session_state:
     st.session_state.liked = ""
     st.session_state.messages = [{"role": "assistant", "content": "أهلاً بك! شو حابب نطبخ اليوم؟"}]
 
-st.title("🍳 ChifBot")
+st.title("🍳 ChefBot")
 
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
@@ -80,5 +80,6 @@ if user_input := st.chat_input("اكتب المكونات مثل: دجاج، ب�
         st.session_state.step = 1 
 
         st.rerun()
+
 
 
