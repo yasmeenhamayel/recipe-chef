@@ -22,7 +22,7 @@ def translate_input(text):
 if "step" not in st.session_state:
     st.session_state.step = 1
     st.session_state.liked = ""
-    st.session_state.messages = [{"role": "assistant", "content": "أهلاً بك! شو حابب نطبخ اليوم؟"}]
+    st.session_state.messages = [{"role": "assistant", "content": "Hello! I'm SmartChef. What would you like to cook today?"}]
 
 st.title("🍳 ChefBot")
 
@@ -30,13 +30,13 @@ for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-# التعديل هنا في النص التوضيحي (Placeholder)
-if user_input := st.chat_input("اكتب المكونات مثل: دجاج، بطاطا..."):
+
+if user_input := st.chat_input("Enter ingredients (e.g., chicken, potato, onion...)."):
     st.session_state.messages.append({"role": "user", "content": user_input})
     
     if st.session_state.step == 1:
         st.session_state.liked = translate_input(user_input)
-        reply = "تمام، هل هناك أي مكونات لا تفضلها أو لديك حساسية منها؟ (إذا لا يوجد اكتب 'لا')"
+        reply = "Great! Are there any ingredients you want to exclude or have allergies to? (Type 'no' if none)"
         st.session_state.messages.append({"role": "assistant", "content": reply})
         st.session_state.step = 2
         st.rerun()
@@ -60,17 +60,17 @@ if user_input := st.chat_input("اكتب المكونات مثل: دجاج، ب�
         results = temp_df[temp_df['score'] > 0].sort_values(by='score', ascending=False).head(3)
 
         if not results.empty:
-            response = "إليك أفضل 3 وصفات تناسب طلبك: \n\n"
+            response = "Here are the top 3 recipes for you: \n\n"
             for i, (idx, recipe) in enumerate(results.iterrows()):
                 response += f"### {i+1}. {recipe['Title']} 🍴\n"
-                response += "**المكونات (Ingredients):**\n"
+                response += "** (Ingredients):**\n"
                 for ing in recipe['Cleaned_Ingredients']:
                     response += f"* {ing}\n"
                 response += "\n---\n"
             
-            response += "\n**أتمنى أن تنال إعجابك! إذا أردت البحث عن شيء آخر، اكتب المكونات هنا 👇**"
+            response += "\n**Enjoy your meal! Want to try other ingredients? Just type them below 👇**"
         else:
-            response = "للأسف لم أجد وصفة مطابقة تماماً، جرب اقتراح مكونات أخرى!"
+            response = "Sorry, I couldn't find a perfect match. Try different ingredients!"
 
         st.session_state.messages.append({"role": "assistant", "content": response})
         st.session_state.step = 1
@@ -80,6 +80,7 @@ if user_input := st.chat_input("اكتب المكونات مثل: دجاج، ب�
         st.session_state.step = 1 
 
         st.rerun()
+
 
 
 
