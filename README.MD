@@ -22,3 +22,4 @@ I built this project from scratch as part of my *self-learning journey*. I taugh
 
 ---
 Feel free to check out the code and try the live demo!
+https://recipe-chef-ahbe7ut4zkeazjfczuwmn6.streamlit.app/
